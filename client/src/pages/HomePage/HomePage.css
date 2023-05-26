@@ -1,0 +1,41 @@
+.logo {
+    text-align: center;
+    font-size: 3.2rem;
+}
+
+.home-page-container {
+    display: flex;
+    margin: auto 4rem auto 4rem;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.gerne-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.gerne-row h1 {
+    font-size: 2.5rem;
+}
+
+.album-cover {
+    display: flex;
+    max-width: 180px;
+
+    flex-wrap: wrap;
+    flex-direction: column;
+
+
+    margin: 10px;
+}
+
+.album-cover img {
+    height: 180px;
+    width: 180px;
+}
+
+.album-cover h5 {
+    margin: 0;
+}
