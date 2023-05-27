@@ -10,6 +10,32 @@
     right: 0;
 }
 
+.current-playing-album {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    margin-left: 1rem;
+    width: 20%;
+
+}
+
+
+.current-playing-album img {
+    height: 60px;
+    width: 60px;
+}
+
+.track-info {
+    width: 100%;
+    padding-left: 14px;
+}
+
+.track-info h5,
+h6 {
+    margin: 10px;
+}
+
 .controls {
     display: flex;
     flex-direction: column;

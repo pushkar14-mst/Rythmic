@@ -12,13 +12,15 @@ const port = 8000;
 var redirect_uri = "http://127.0.0.1:5173/";
 app.get("/", (req, res) => {
     var code = req.query.code || null;
-    var state = req.query.state || null;
-    console.log(code);
 });
 app.get("/login", (req, res) => {
+    var scope = "streaming \
+  user-read-email \
+  user-read-private";
     res.redirect("https://accounts.spotify.com/authorize?" +
         querystring.stringify({
             response_type: "token",
+            scope: scope,
             client_id: process.env.SPOTIFY_CLIENT_ID,
             redirect_uri: redirect_uri,
         }));

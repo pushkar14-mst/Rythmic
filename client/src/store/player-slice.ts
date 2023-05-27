@@ -4,12 +4,14 @@ interface PlayerState {
   play: boolean;
   pause: boolean;
   volume: number;
+  album: object;
 }
 
 const initialState: PlayerState = {
   play: false,
   pause: false,
   volume: 0,
+  album: {},
 };
 
 const playerSlice = createSlice({
@@ -29,6 +31,9 @@ const playerSlice = createSlice({
     },
     decrementVolume(state, action: PayloadAction<any>) {
       state.volume = state.volume - action.payload.volume!;
+    },
+    setTrack(state, action: PayloadAction<any>) {
+      state.album = action.payload;
     },
   },
 });
