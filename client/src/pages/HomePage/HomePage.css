@@ -16,6 +16,15 @@
     gap: 10px;
 }
 
+.gerne-row a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.gerne-row a:hover {
+    color: inherit;
+}
+
 .gerne-row h1 {
     font-size: 2.5rem;
 }

@@ -4,6 +4,7 @@ import axios from "axios";
 import MusicPlayer from "../../components/MusicPlayer/MusicPlayer";
 import { useDispatch } from "react-redux";
 import { playerActions } from "../../store/player-slice";
+import { Link } from "react-router-dom";
 const HomePage: React.FC = () => {
   const [profile, setProfile] = useState<any>(null);
   const [popTracks, setPopTracks] = useState<any>([]);
@@ -16,7 +17,7 @@ const HomePage: React.FC = () => {
     .find((elem) => elem.startsWith("access_token"))
     .split("=")[1];
 
-  console.log(access_token);
+  //console.log(access_token);
 
   const clientId: string = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 
@@ -82,29 +83,31 @@ const HomePage: React.FC = () => {
         <div className="gerne-row">
           {newReleases.map((albums: any) => {
             return (
-              <div
-                className="album-cover"
-                // onClick={() => {
-                //   dispatch(
-                //     playerActions.setTrack({
-                //       albumImg: albums.images[0].url,
-                //       albumName: albums.name,
-                //       artists: albums.artists,
-                //       trackId: albums.uri,
-                //     })
-                //   );
-                // }}
+              <Link
+                to={`/album`}
+                state={{
+                  album: {
+                    albumId: albums.id,
+                    name: albums.name,
+                    artists: albums.artists,
+                    image: albums.images[0].url,
+                  },
+                  access_token: access_token,
+                }}
               >
-                <img src={albums.images[0].url} alt="album cover" />
-                <h3>{albums.name}</h3>
-                <h5>
-                  {albums.artists!.map((artist: any) => {
-                    return (
-                      artist.name + `${albums.artists!.length < 2 ? "" : ", "}`
-                    );
-                  })}
-                </h5>
-              </div>
+                <div className="album-cover">
+                  <img src={albums.images[0].url} alt="album cover" />
+                  <h3>{albums.name}</h3>
+                  <h5>
+                    {albums.artists!.map((artist: any) => {
+                      return (
+                        artist.name +
+                        `${albums.artists!.length < 2 ? "" : ", "}`
+                      );
+                    })}
+                  </h5>
+                </div>
+              </Link>
             );
           })}
         </div>

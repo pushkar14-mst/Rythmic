@@ -1,0 +1,38 @@
+.album-page-container {
+    display: flex;
+    margin: auto 10rem auto 10rem;
+    flex-direction: row;
+    gap: 5px;
+
+}
+
+.albumPage-cover {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+}
+
+.albumPage-cover img {
+    height: 300px;
+    width: 300px;
+}
+
+.albumPage-cover p {
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.albumPage-tracks {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2rem;
+    width: 100%
+}
+
+.album-track {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #504A4B;
+    font-weight: 400;
+    width: 100%;
+}
