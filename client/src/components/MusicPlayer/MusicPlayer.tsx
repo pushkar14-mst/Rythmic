@@ -5,13 +5,14 @@ import playImg from "../../assets/icons/play.png";
 import pauseImg from "../../assets/icons/pause.png";
 import rewind from "../../assets/icons/rewind.png";
 import volume from "../../assets/icons/volume.png";
-
+import axios from "axios";
 interface Props {
   accessToken: string;
 }
 const MusicPlayer = ({ accessToken }: Props) => {
   const [playingState, setPlayingState] = useState<boolean>(false);
   const [player, setPlayer] = useState();
+  const [progress, setProgress] = useState<any>();
   const [deviceId, setDeviceId] = useState<string>("");
   const album = useSelector((state: any) => state!.player.album);
 
@@ -39,7 +40,7 @@ const MusicPlayer = ({ accessToken }: Props) => {
         console.log("Device ID has gone offline", device_id);
       });
       player.getCurrentState().then((state: any) => {
-        console.log(state.track_window.current_track);
+        console.log(state);
       });
 
       player.connect();
@@ -87,6 +88,19 @@ const MusicPlayer = ({ accessToken }: Props) => {
       });
   };
 
+  const getCurrentState = async () => {
+    await axios
+      .get("https://api.spotify.com/v1/me/player/currently-playing", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        setProgress(response.data.progress_ms);
+      });
+  };
+  const minutes = Math.floor(progress / 60000);
+  const seconds = Math.floor((progress % 60000) / 1000);
   useEffect(() => {
     play(deviceId);
   }, [album]);
@@ -97,6 +111,17 @@ const MusicPlayer = ({ accessToken }: Props) => {
       play(deviceId);
     }
   }, [playingState]);
+  useEffect(() => {
+    getCurrentState();
+    const intervalId = setInterval(getCurrentState, 1000);
+    return () => {
+      clearInterval(intervalId); // Clean up the interval on component unmount
+    };
+  }, []);
+  console.log(
+    `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`,
+    album.duration
+  );
 
   return (
     <>
@@ -123,8 +148,14 @@ const MusicPlayer = ({ accessToken }: Props) => {
             />
             <img src={rewind} alt="rewind" style={{ rotate: "180deg" }} />
           </div>
-          <div className="seek-bar"></div>
+          <div className="track-progress">
+            <p>{`${minutes}:${seconds < 10 ? "0" : ""}${seconds}`}</p>
+            <div className="seek-bar"></div>
+
+            <p>{`${album.duration.slice(0, 1)}:${album.duration.slice(1)}`}</p>
+          </div>
         </div>
+
         <div className="volume">
           <img src={volume} alt="volume" />
           <div className="volume-bar"></div>

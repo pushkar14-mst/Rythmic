@@ -28,6 +28,8 @@ const AlbumPage: React.FC = () => {
         console.error("Error fetching album tracks:", error);
       });
   };
+  console.log("album tracks", tracks);
+
   useEffect(() => {
     retrieveTracks();
   }, []);
@@ -59,15 +61,17 @@ const AlbumPage: React.FC = () => {
                   onClick={() => {
                     dispatch(
                       playerActions.setTrack({
-                        albumImg: track.images[0].url,
+                        albumImg: album.image,
                         albumName: track.name,
                         artists: track.artists,
                         trackId: track.uri,
+                        duration: duration,
                       })
                     );
                   }}
                 >
                   <p>{track.name}</p>
+
                   <p style={{ marginLeft: "auto" }}>{`${duration.slice(
                     0,
                     1

@@ -16,7 +16,8 @@ app.get("/", (req, res) => {
 app.get("/login", (req, res) => {
     var scope = "streaming \
   user-read-email \
-  user-read-private";
+  user-read-private \
+  user-read-playback-state";
     res.redirect("https://accounts.spotify.com/authorize?" +
         querystring.stringify({
             response_type: "token",

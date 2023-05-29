@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 const HomePage: React.FC = () => {
   const [profile, setProfile] = useState<any>(null);
   const [popTracks, setPopTracks] = useState<any>([]);
+  const [rockTracks, setRockTracks] = useState<any>([]);
   const [newReleases, setNewReleases] = useState<any>([]);
   const token = window.location.hash;
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const HomePage: React.FC = () => {
     .find((elem) => elem.startsWith("access_token"))
     .split("=")[1];
 
-  //console.log(access_token);
+  console.log(access_token);
 
   const clientId: string = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 
@@ -35,7 +36,12 @@ const HomePage: React.FC = () => {
       })
       .then((res) => {
         console.log(res.data);
-        setPopTracks(res.data.tracks.items);
+        if (genre === "pop") {
+          setPopTracks(res.data.tracks.items);
+        }
+        if (genre === "rock") {
+          setRockTracks(res.data.tracks.items);
+        }
       });
   };
 
@@ -53,10 +59,26 @@ const HomePage: React.FC = () => {
         setNewReleases(res.data.albums.items);
       });
   };
+
+  const getTopTracks = async () => {
+    await axios
+      .get("​https://api.spotify.com/v1/me/top", {
+        headers: {
+          Authorization: "Bearer " + access_token,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  };
+
   useEffect(() => {
     getTracksByGerne("pop");
+    getTracksByGerne("rock");
     getNewReleases();
+    getTopTracks();
   }, []);
+
   useEffect(() => {
     fetchProfile(access_token).then((res) => {
       setProfile(res);
@@ -72,13 +94,13 @@ const HomePage: React.FC = () => {
     const data = await result.json();
     return data;
   }
-  console.log(newReleases);
 
   return (
     <>
       <h1 className="logo">Rythmic</h1>
       <div className="home-page-container">
         {profile && <h2>Good Day, {profile.display_name}</h2>}
+
         <h1>New Releases</h1>
         <div className="gerne-row">
           {newReleases.map((albums: any) => {
@@ -114,6 +136,36 @@ const HomePage: React.FC = () => {
         <h1>Pop</h1>
         <div className="gerne-row">
           {popTracks.map((tracks: any) => {
+            return (
+              <div
+                className="album-cover"
+                onClick={() => {
+                  dispatch(
+                    playerActions.setTrack({
+                      albumImg: tracks.album.images[0].url,
+                      albumName: tracks.album.name,
+                      artists: tracks.artists,
+                      trackId: tracks.uri,
+                    })
+                  );
+                }}
+              >
+                <img src={tracks.album.images[0].url} alt="album cover" />
+                <h3>{tracks.album.name}</h3>
+                <h5>
+                  {tracks.artists!.map((artist: any) => {
+                    return (
+                      artist.name + `${tracks.artists!.length < 2 ? "" : ", "}`
+                    );
+                  })}
+                </h5>
+              </div>
+            );
+          })}
+        </div>
+        <h1>Rock</h1>
+        <div className="gerne-row">
+          {rockTracks.map((tracks: any) => {
             return (
               <div
                 className="album-cover"
