@@ -1,4 +1,4 @@
-import express, { Express, Request, Response, query } from "express";
+import express, { Express, Request, Response } from "express";
 var dotenv = require("dotenv");
 const querystring = require("node:querystring");
 dotenv.config();

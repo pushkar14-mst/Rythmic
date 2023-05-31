@@ -136,6 +136,7 @@ const HomePage: React.FC = () => {
         <h1>Pop</h1>
         <div className="gerne-row">
           {popTracks.map((tracks: any) => {
+            let duration = String(Math.round(tracks.duration_ms / 1000));
             return (
               <div
                 className="album-cover"
@@ -146,6 +147,7 @@ const HomePage: React.FC = () => {
                       albumName: tracks.album.name,
                       artists: tracks.artists,
                       trackId: tracks.uri,
+                      duration: duration,
                     })
                   );
                 }}
@@ -166,6 +168,7 @@ const HomePage: React.FC = () => {
         <h1>Rock</h1>
         <div className="gerne-row">
           {rockTracks.map((tracks: any) => {
+            let duration = String(Math.round(tracks.duration_ms / 1000));
             return (
               <div
                 className="album-cover"
@@ -176,6 +179,7 @@ const HomePage: React.FC = () => {
                       albumName: tracks.album.name,
                       artists: tracks.artists,
                       trackId: tracks.uri,
+                      duration: duration,
                     })
                   );
                 }}

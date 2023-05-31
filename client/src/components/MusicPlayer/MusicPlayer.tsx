@@ -150,9 +150,22 @@ const MusicPlayer = ({ accessToken }: Props) => {
           </div>
           <div className="track-progress">
             <p>{`${minutes}:${seconds < 10 ? "0" : ""}${seconds}`}</p>
-            <div className="seek-bar"></div>
+            <div className="seek">
+              <div
+                className="progress-bar"
+                style={{
+                  width: progress
+                    ? `${((progress / album.duration) * 100) / 500}px`
+                    : `0`,
+                }}
+              />
+              <div className="seek-bar" />
+            </div>
 
-            <p>{`${album.duration.slice(0, 1)}:${album.duration.slice(1)}`}</p>
+            <p>
+              {typeof album.duration !== "undefined" &&
+                `${album!.duration!.slice(0, 1)}:${album!.duration!.slice(1)}`}
+            </p>
           </div>
         </div>
 
