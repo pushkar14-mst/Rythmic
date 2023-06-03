@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MusicPlayer from "../../components/MusicPlayer/MusicPlayer";
 import "./AlbumPage.css";
 import { useLocation } from "react-router";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { playerActions } from "../../store/player-slice";
+import menuIcon from "../../assets/icons/menu-dots.png";
 const AlbumPage: React.FC = () => {
   const [tracks, setTracks] = useState<any>([]);
+  const [showMenu, setShowMenu] = useState(false);
+  const [trackId, setTrackId] = useState<any>("");
   const location = useLocation();
   const dispatch = useDispatch();
   console.log(location.state);
@@ -76,6 +79,39 @@ const AlbumPage: React.FC = () => {
                     0,
                     1
                   )}:${duration.slice(1)}`}</p>
+                  <div className="track-menu" key={track.id}>
+                    <img
+                      src={menuIcon}
+                      onClick={() => {
+                        setShowMenu(!showMenu);
+                        setTrackId(track.id);
+                      }}
+                    />
+                    {showMenu && trackId === track.id && (
+                      <>
+                        <div className="track-menu-box">
+                          <ul>
+                            <li
+                              onClick={() => {
+                                dispatch(
+                                  playerActions.addToListeningQueue({
+                                    albumImg: album.image,
+                                    albumName: track.name,
+                                    artists: track.artists,
+                                    trackId: track.uri,
+                                    duration: duration,
+                                  })
+                                );
+                              }}
+                            >
+                              Add to Queue
+                            </li>
+                            <li>Add to playlist</li>
+                          </ul>
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
               </>
             );

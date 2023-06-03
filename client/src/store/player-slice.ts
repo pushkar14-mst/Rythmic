@@ -5,6 +5,7 @@ interface PlayerState {
   pause: boolean;
   volume: number;
   album: object;
+  queue: any[];
 }
 
 const initialState: PlayerState = {
@@ -12,6 +13,7 @@ const initialState: PlayerState = {
   pause: false,
   volume: 0,
   album: {},
+  queue: [],
 };
 
 const playerSlice = createSlice({
@@ -34,6 +36,12 @@ const playerSlice = createSlice({
     },
     setTrack(state, action: PayloadAction<any>) {
       state.album = action.payload;
+    },
+    addToListeningQueue(state, action: PayloadAction<any>) {
+      state.queue.push(action.payload);
+    },
+    removeFromListeningQueue(state, action: PayloadAction<any>) {
+      state.queue.splice(action.payload, 1);
     },
   },
 });

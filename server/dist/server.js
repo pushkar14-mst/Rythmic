@@ -10,9 +10,6 @@ dotenv.config();
 const app = (0, express_1.default)();
 const port = 8000;
 var redirect_uri = "http://127.0.0.1:5173/";
-app.get("/", (req, res) => {
-    var code = req.query.code || null;
-});
 app.get("/login", (req, res) => {
     var scope = "streaming \
   user-read-email \

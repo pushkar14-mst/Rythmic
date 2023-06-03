@@ -5,6 +5,7 @@ import playImg from "../../assets/icons/play.png";
 import pauseImg from "../../assets/icons/pause.png";
 import rewind from "../../assets/icons/rewind.png";
 import volume from "../../assets/icons/volume.png";
+import musicQueue from "../../assets/icons/list-music.png";
 import axios from "axios";
 interface Props {
   accessToken: string;
@@ -15,6 +16,8 @@ const MusicPlayer = ({ accessToken }: Props) => {
   const [progress, setProgress] = useState<any>();
   const [deviceId, setDeviceId] = useState<string>("");
   const album = useSelector((state: any) => state!.player.album);
+  const playingQueue = useSelector((state: any) => state!.player.queue);
+  console.log("current playing queue: ", playingQueue);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -138,6 +141,7 @@ const MusicPlayer = ({ accessToken }: Props) => {
             </h6>
           </div>
         </div>
+
         <div className="controls">
           <div className="playing-states">
             <img src={rewind} alt="rewind" />
@@ -147,6 +151,7 @@ const MusicPlayer = ({ accessToken }: Props) => {
               onClick={() => setPlayingState(!playingState)}
             />
             <img src={rewind} alt="rewind" style={{ rotate: "180deg" }} />
+            <img src={musicQueue} alt="queue" />
           </div>
           <div className="track-progress">
             <p>{`${minutes}:${seconds < 10 ? "0" : ""}${seconds}`}</p>

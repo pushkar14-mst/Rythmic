@@ -7,10 +7,6 @@ const port = 8000;
 
 var redirect_uri = "http://127.0.0.1:5173/";
 
-app.get("/", (req: Request, res: Response) => {
-  var code = req.query.code || null;
-});
-
 app.get("/login", (req: Request, res: Response) => {
   var scope =
     "streaming \

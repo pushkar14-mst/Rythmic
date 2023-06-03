@@ -36,6 +36,14 @@ h6 {
     margin: 10px;
 }
 
+.playing-queue {
+    display: flex;
+
+    background-color: #504A4B;
+    width: 600px;
+    height: 600px;
+}
+
 .controls {
     display: flex;
     flex-direction: column;
@@ -53,6 +61,8 @@ h6 {
     margin-right: 10px;
 
 }
+
+
 
 .playing-states {
     flex-direction: row;
