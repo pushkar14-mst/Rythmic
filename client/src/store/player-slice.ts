@@ -40,8 +40,8 @@ const playerSlice = createSlice({
     addToListeningQueue(state, action: PayloadAction<any>) {
       state.queue.push(action.payload);
     },
-    removeFromListeningQueue(state, action: PayloadAction<any>) {
-      state.queue.splice(action.payload, 1);
+    removeFromListeningQueue(state) {
+      state.queue.splice(0, 1);
     },
   },
 });

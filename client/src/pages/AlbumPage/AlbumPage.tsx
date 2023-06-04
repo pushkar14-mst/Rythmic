@@ -55,30 +55,34 @@ const AlbumPage: React.FC = () => {
         <div className="albumPage-tracks">
           <h1>Tracks</h1>
           {tracks.map((track: any) => {
-            let duration = String(Math.round(track.duration_ms / 1000));
-
+            let duration = track.duration_ms;
+            const totalMinutes = Math.floor(duration / 60000);
+            const totalSeconds = Math.floor((duration % 60000) / 1000);
             return (
               <>
-                <div
-                  className="album-track"
-                  onClick={() => {
-                    dispatch(
-                      playerActions.setTrack({
-                        albumImg: album.image,
-                        albumName: track.name,
-                        artists: track.artists,
-                        trackId: track.uri,
-                        duration: duration,
-                      })
-                    );
-                  }}
-                >
-                  <p>{track.name}</p>
+                <div className="album-track">
+                  <p
+                    onClick={() => {
+                      dispatch(
+                        playerActions.setTrack({
+                          albumImg: album.image,
+                          albumName: track.name,
+                          artists: track.artists,
+                          trackId: track.uri,
+                          duration: duration,
+                        })
+                      );
+                    }}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {track.name}
+                  </p>
 
-                  <p style={{ marginLeft: "auto" }}>{`${duration.slice(
-                    0,
-                    1
-                  )}:${duration.slice(1)}`}</p>
+                  <p style={{ marginLeft: "auto" }}>
+                    {`${totalMinutes}:${
+                      totalSeconds < 10 ? "0" : ""
+                    }${totalSeconds}`}
+                  </p>
                   <div className="track-menu" key={track.id}>
                     <img
                       src={menuIcon}
