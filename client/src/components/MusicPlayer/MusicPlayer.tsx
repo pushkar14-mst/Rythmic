@@ -167,7 +167,7 @@ const MusicPlayer = ({ accessToken }: Props) => {
             {playingQueue.map((track: any) => {
               return (
                 <li>
-                  <div className="queue-track">
+                  <div className="queue-track" draggable>
                     <img src={track.albumImg} alt="album-img" />
                     <h4>{track.albumName}</h4>
                     <h5>

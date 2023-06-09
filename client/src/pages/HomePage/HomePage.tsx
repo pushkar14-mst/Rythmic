@@ -5,6 +5,7 @@ import MusicPlayer from "../../components/MusicPlayer/MusicPlayer";
 import { useDispatch } from "react-redux";
 import { playerActions } from "../../store/player-slice";
 import { Link } from "react-router-dom";
+import goto from "../../assets/icons/next.png";
 const HomePage: React.FC = () => {
   const [profile, setProfile] = useState<any>(null);
   const [popTracks, setPopTracks] = useState<any>([]);
@@ -99,7 +100,23 @@ const HomePage: React.FC = () => {
     <>
       <h1 className="logo">Rythmic</h1>
       <div className="home-page-container">
-        {profile && <h2>Good Day, {profile.display_name}</h2>}
+        {profile && (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <h2>Good Day, {profile.display_name}</h2>
+            <div id="profile-nav-btn">
+              <Link to={`/profile`} state={{ profile: profile }}>
+                <img src={goto} alt="goto" />
+              </Link>
+            </div>
+          </div>
+        )}
 
         <h1>New Releases</h1>
         <div className="gerne-row">
@@ -136,7 +153,6 @@ const HomePage: React.FC = () => {
         <h1>Pop</h1>
         <div className="gerne-row">
           {popTracks.map((tracks: any) => {
-            let duration = String(Math.round(tracks.duration_ms / 1000));
             return (
               <div
                 className="album-cover"
@@ -147,7 +163,7 @@ const HomePage: React.FC = () => {
                       albumName: tracks.album.name,
                       artists: tracks.artists,
                       trackId: tracks.uri,
-                      duration: duration,
+                      duration: tracks.duration_ms,
                     })
                   );
                 }}
@@ -168,7 +184,6 @@ const HomePage: React.FC = () => {
         <h1>Rock</h1>
         <div className="gerne-row">
           {rockTracks.map((tracks: any) => {
-            let duration = String(Math.round(tracks.duration_ms / 1000));
             return (
               <div
                 className="album-cover"
@@ -179,7 +194,7 @@ const HomePage: React.FC = () => {
                       albumName: tracks.album.name,
                       artists: tracks.artists,
                       trackId: tracks.uri,
-                      duration: duration,
+                      duration: tracks.duration_ms,
                     })
                   );
                 }}
