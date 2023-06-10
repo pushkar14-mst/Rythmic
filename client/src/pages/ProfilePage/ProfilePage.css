@@ -24,3 +24,56 @@
     border-radius: 10px;
 
 }
+
+.create-playlist-dialog {
+    background-color: rgb(80, 74, 75);
+    border-radius: 10px;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition-delay: 0.5s;
+    border: 0;
+    width: 500px;
+}
+
+.playlist-form {
+    display: flex;
+    font-size: 1rem;
+    font-family: inherit;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+
+#playlist-name {
+    background-color: #504A4B;
+    border: 0;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+#playlist-description {
+    background-color: #504A4B;
+    font-family: inherit;
+    font-size: inherit;
+    border: 0;
+}
+
+.playlist-card {
+    border-radius: 5px;
+    height: 200px;
+    width: 200px;
+    background-color: #504A4B;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.playlist-card:nth-child(1) {
+    flex-direction: row;
+    cursor: pointer;
+}
+
+#create-icon {
+    font-size: 5rem;
+}

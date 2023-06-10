@@ -23,6 +23,13 @@ const HomePage: React.FC = () => {
 
   const clientId: string = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 
+  const addUser = async () => {
+    await axios.post("http://localhost:8000/add-user", {
+      username: profile.display_name,
+      userId: profile.id,
+    });
+  };
+
   const getTracksByGerne = async (genre: string) => {
     await axios
       .get("https://api.spotify.com/v1/search/", {
@@ -74,6 +81,7 @@ const HomePage: React.FC = () => {
   };
 
   useEffect(() => {
+    addUser();
     getTracksByGerne("pop");
     getTracksByGerne("rock");
     getNewReleases();
