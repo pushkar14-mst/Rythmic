@@ -6,11 +6,13 @@ import { useDispatch } from "react-redux";
 import { playerActions } from "../../store/player-slice";
 import { Link } from "react-router-dom";
 import goto from "../../assets/icons/next.png";
+
 const HomePage: React.FC = () => {
   const [profile, setProfile] = useState<any>(null);
   const [popTracks, setPopTracks] = useState<any>([]);
   const [rockTracks, setRockTracks] = useState<any>([]);
   const [newReleases, setNewReleases] = useState<any>([]);
+
   const token = window.location.hash;
   const dispatch = useDispatch();
   const access_token = token
@@ -119,7 +121,10 @@ const HomePage: React.FC = () => {
           >
             <h2>Good Day, {profile.display_name}</h2>
             <div id="profile-nav-btn">
-              <Link to={`/profile`} state={{ profile: profile }}>
+              <Link
+                to={`/profile`}
+                state={{ profile: profile, access_token: access_token }}
+              >
                 <img src={goto} alt="goto" />
               </Link>
             </div>

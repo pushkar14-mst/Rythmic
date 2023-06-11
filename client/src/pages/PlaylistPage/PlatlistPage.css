@@ -1,0 +1,18 @@
+.playlist-container {
+    display: flex;
+    flex-direction: column;
+    margin: auto 20rem;
+
+}
+
+.playlist-cover {
+    background-image: linear-gradient(to bottom, #ffffff, #c2c2c2, #898989, #545454, #242424);
+    height: 300px;
+
+}
+
+.playlist {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
