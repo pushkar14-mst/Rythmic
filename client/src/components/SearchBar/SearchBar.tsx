@@ -8,6 +8,7 @@ interface SearchBarProps {
 }
 const SearchBar = ({ access_token }: SearchBarProps) => {
   const [search, setSearch] = useState<string>("");
+  const [results, setResults] = useState<any>([]);
   console.log(access_token);
 
   const searchHandler = async () => {
@@ -23,9 +24,11 @@ const SearchBar = ({ access_token }: SearchBarProps) => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        setResults(res.data.tracks.items);
       });
   };
+  console.log(results);
+
   useEffect(() => {
     searchHandler();
   }, [search]);
@@ -39,7 +42,26 @@ const SearchBar = ({ access_token }: SearchBarProps) => {
           className="search-bar"
           onChange={(e) => setSearch(e.target.value)}
         />
-        <div className="search-results"></div>
+        <div className="search-results">
+          {results.map((res: any) => {
+            return (
+              <div className="results">
+                <img src={res.album.images[0].url} />
+                <div className="song-info">
+                  <h3 style={{ margin: "5px 5px" }}>{res.name}</h3>
+                  <p style={{ margin: "5px 5px" }}>
+                    {res.artists!.map((artist: any) => {
+                      return (
+                        artist.name + `${res.artists!.length < 2 ? "" : ", "}`
+                      );
+                    })}
+                  </p>
+                </div>
+                <button style={{ marginLeft: "auto" }}>Add</button>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </>
   );

@@ -75,6 +75,33 @@ app.get("/login", (req: Request, res: Response) => {
   );
 });
 
+app.post("/add-playlist", async (req: Request, res: Response) => {
+  const username = req.body.username;
+  const playlistName = req.body.playlistName;
+  const playlistDescription = req.body.playlistDescription;
+  console.log(username, playlistName, playlistDescription);
+
+  try {
+    await User.updateOne(
+      { username: username },
+      {
+        $push: {
+          playlists: { name: playlistName, description: playlistDescription },
+        },
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/load-playlists/:username", async (req: Request, res: Response) => {
+  let username = req.params.username;
+
+  await User.findOne({ username: username }).then((user: any) => {
+    res.json(user?.playlists);
+  });
+});
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });

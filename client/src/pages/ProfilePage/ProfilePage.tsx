@@ -1,11 +1,11 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
-
 import "./ProfilePage.css";
-import createIcon from "../../assets/icons/add.png";
-import { useDispatch } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
 import { playlistActions } from "../../store/playlist-slice";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const ProfilePage = () => {
   const [modal, setModal] = useState(false);
@@ -16,21 +16,45 @@ const ProfilePage = () => {
   const location = useLocation();
   const profile = location.state.profile;
   const access_token = location.state!.access_token;
+  const pName = useSelector((state) => state.playlist.name);
+  const pDescription = useSelector((state) => state.playlist.description);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(profile);
+  console.log(pName, pDescription);
 
   const logoutHandler = () => {
     localStorage.removeItem("access_token");
     navigate("/", { replace: true });
   };
-  //   dispatch(
-  //     playlistActions.setPlaylist({
-  //       name: playlistName,
-  //       description: playlistDescription,
-  //       access_token: access_token,
-  //     })
-  //   );
+
+  const addPlaylist = async () => {
+    if (pName.length > 0) {
+      await axios.post("http://localhost:8000/add-playlist", {
+        username: profile.display_name,
+        playlistName: pName,
+        playlistDescription: pDescription,
+      });
+    }
+  };
+  const loadPlaylist = async () => {
+    await axios
+      .get(`http://localhost:8000/load-playlists/${profile.display_name}`)
+      .then((res) => {
+        console.log(res.data);
+
+        setPlaylists(res.data);
+      });
+  };
+  dispatch(
+    playlistActions.setPlaylist({
+      name: playlistName,
+      description: playlistDescription,
+    })
+  );
+
+  useEffect(() => {
+    loadPlaylist();
+  }, [modal]);
   return (
     <>
       <h1 className="logo">Rythmic</h1>
@@ -64,6 +88,7 @@ const ProfilePage = () => {
               type="text"
               placeholder="Enter your Playlist Name"
               id="playlist-name"
+              value={playlistName}
               onChange={(e) => {
                 setPlaylistName(e.target.value);
               }}
@@ -71,6 +96,7 @@ const ProfilePage = () => {
             <textarea
               rows={5}
               id="playlist-description"
+              value={playlistDescription}
               placeholder="Enter your description"
               onChange={(e) => {
                 setPlaylistDescription(e.target.value);
@@ -88,9 +114,9 @@ const ProfilePage = () => {
           <button
             style={{ marginLeft: "10px" }}
             onClick={() => {
-              setPlaylists([
-                { name: playlistName, description: playlistDescription },
-              ]);
+              addPlaylist();
+              setPlaylistName("");
+              setPlaylistDescription("");
               setModal(false);
             }}
           >
@@ -109,22 +135,23 @@ const ProfilePage = () => {
               <h1 id="create-icon">+</h1>
               <h3 style={{ margin: "0" }}>Create a new playlist</h3>
             </div>
-            {playlists.map((playlist) => {
-              return (
-                <Link
-                  to={`/profile/my-playlists/${playlist.name}`}
-                  state={{
-                    playlistName: playlist.name,
-                    description: playlist.description,
-                    access_token: access_token,
-                  }}
-                >
-                  <div className="playlist-card">
-                    <h3>{playlist.name}</h3>
-                  </div>
-                </Link>
-              );
-            })}
+            {playlists &&
+              playlists.map((playlist) => {
+                return (
+                  <Link
+                    to={`/profile/my-playlists/${playlist.name}`}
+                    state={{
+                      playlistName: playlist.name,
+                      description: playlist.description,
+                      access_token: access_token,
+                    }}
+                  >
+                    <div className="playlist-card">
+                      <h3>{playlist.name}</h3>
+                    </div>
+                  </Link>
+                );
+              })}
           </div>
         </div>
       </div>

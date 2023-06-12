@@ -12,8 +12,9 @@
     border: none;
     outline: none;
     padding: 10px;
-    font-size: 1.45rem;
-    font-weight: 700;
+    font-size: 1.35rem;
+    font-weight: 400;
+    opacity: 0.32;
 }
 
 .search-bar::placeholder {
@@ -29,5 +30,30 @@
     overflow-y: scroll;
     background-color: #504A4B;
     margin-top: 10px;
-    width: 40%;
+    width: 60%;
+    padding: 10px;
+
+}
+
+
+
+.results {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    align-items: center;
+    border-bottom: 1px solid #ffffffde;
+    cursor: pointer;
+}
+
+
+
+.song-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.results img {
+    height: 50px;
+    width: 50px;
 }

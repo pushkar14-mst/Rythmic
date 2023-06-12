@@ -95,6 +95,28 @@ app.get("/login", (req, res) => {
             redirect_uri: redirect_uri,
         }));
 });
+app.post("/add-playlist", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const username = req.body.username;
+    const playlistName = req.body.playlistName;
+    const playlistDescription = req.body.playlistDescription;
+    console.log(username, playlistName, playlistDescription);
+    try {
+        yield User.updateOne({ username: username }, {
+            $push: {
+                playlists: { name: playlistName, description: playlistDescription },
+            },
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+}));
+app.get("/load-playlists/:username", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let username = req.params.username;
+    yield User.findOne({ username: username }).then((user) => {
+        res.json(user === null || user === void 0 ? void 0 : user.playlists);
+    });
+}));
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
