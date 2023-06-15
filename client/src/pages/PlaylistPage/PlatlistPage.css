@@ -15,4 +15,15 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    margin: 2rem;
+    gap: 1rem;
+}
+
+.playlist-tile {
+    display: flex;
+    height: 300px;
+    width: 180px;
+    background-color: #504A4B;
+    flex-direction: column;
+    padding: 1rem;
 }

@@ -86,9 +86,28 @@ app.post("/add-playlist", async (req: Request, res: Response) => {
       { username: username },
       {
         $push: {
-          playlists: { name: playlistName, description: playlistDescription },
+          playlists: {
+            name: playlistName,
+            description: playlistDescription,
+            tracks: [],
+          },
         },
       }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.post("/add-song-to-playlist", async (req: Request, res: Response) => {
+  const playlistName = req.body.playlistName;
+  const track = req.body.track;
+
+  try {
+    await User.updateOne(
+      { "playlists.name": playlistName },
+      { $push: { "playlists.$.tracks": track } },
+      { new: true }
     );
   } catch (error) {
     console.log(error);

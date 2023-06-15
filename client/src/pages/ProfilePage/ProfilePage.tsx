@@ -144,6 +144,7 @@ const ProfilePage = () => {
                       playlistName: playlist.name,
                       description: playlist.description,
                       access_token: access_token,
+                      playlistTracks: playlist.tracks,
                     }}
                   >
                     <div className="playlist-card">

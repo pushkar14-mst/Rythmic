@@ -103,9 +103,23 @@ app.post("/add-playlist", (req, res) => __awaiter(void 0, void 0, void 0, functi
     try {
         yield User.updateOne({ username: username }, {
             $push: {
-                playlists: { name: playlistName, description: playlistDescription },
+                playlists: {
+                    name: playlistName,
+                    description: playlistDescription,
+                    tracks: [],
+                },
             },
         });
+    }
+    catch (error) {
+        console.log(error);
+    }
+}));
+app.post("/add-song-to-playlist", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const playlistName = req.body.playlistName;
+    const track = req.body.track;
+    try {
+        yield User.updateOne({ "playlists.name": playlistName }, { $push: { "playlists.$.tracks": track } }, { new: true });
     }
     catch (error) {
         console.log(error);
