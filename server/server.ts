@@ -12,8 +12,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const port = 8000;
 
 var redirect_uri = "http://127.0.0.1:5173/";
-
-mongoose.connect("mongodb://localhost:27017/spotifyDB").then(() => {
+const mongoAtlasUrl= process.env.MONGO_ATLAS_URL;
+mongoose.connect(`${mongoAtlasUrl}`).then(() => {
   console.log("Connected to MongoDB");
 });
 

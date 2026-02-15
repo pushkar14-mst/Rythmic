@@ -1,29 +1,35 @@
 .playlist-container {
-    display: flex;
-    flex-direction: column;
-    margin: auto 20rem;
-
+  display: flex;
+  flex-direction: column;
+  margin: auto 20rem;
 }
 
 .playlist-cover {
-    background-image: linear-gradient(to bottom, #ffffff, #c2c2c2, #898989, #545454, #242424);
-    height: 300px;
-
+  background-image: linear-gradient(
+    to bottom,
+    #ffffff,
+    #c2c2c2,
+    #898989,
+    #545454,
+    #242424
+  );
+  height: 300px;
 }
 
 .playlist {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: 2rem;
-    gap: 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 2rem;
+  gap: 1rem;
 }
 
 .playlist-tile {
-    display: flex;
-    height: 300px;
-    width: 180px;
-    background-color: #504A4B;
-    flex-direction: column;
-    padding: 1rem;
+  display: flex;
+  height: 300px;
+  width: 180px;
+  background-color: #504a4b;
+  flex-direction: column;
+  padding: 1rem;
+  cursor: pointer;
 }

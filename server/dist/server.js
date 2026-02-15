@@ -48,7 +48,8 @@ app.use(cors({ origin: "http://127.0.0.1:5173" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 const port = 8000;
 var redirect_uri = "http://127.0.0.1:5173/";
-mongoose_1.default.connect("mongodb://localhost:27017/spotifyDB").then(() => {
+const mongoAtlasUrl = process.env.MONGO_ATLAS_URL;
+mongoose_1.default.connect(`${mongoAtlasUrl}`).then(() => {
     console.log("Connected to MongoDB");
 });
 const userSchema = new mongoose_1.default.Schema({

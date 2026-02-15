@@ -1,8 +1,10 @@
 import { useLocation, useParams } from "react-router";
 import "./PlatlistPage.css";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { playerActions } from "../../store/player-slice";
+import MusicPlayer from "../../components/MusicPlayer/MusicPlayer";
 
 const PlaylistPage: React.FC = () => {
   const params = useParams();
@@ -11,7 +13,7 @@ const PlaylistPage: React.FC = () => {
   const addedTracks = useSelector((state) => state!.playlist!.tracks);
   const playlistName = useSelector((state) => state!.playlist!.name);
   const playlistsTracks = location.state.playlistTracks;
-
+  const dispatch = useDispatch();
   console.log("added tracks: ", addedTracks);
   const access_token = location.state.access_token;
 
@@ -63,7 +65,20 @@ const PlaylistPage: React.FC = () => {
             addedTracks!.map((track) => {
               return (
                 <>
-                  <div className="playlist-tile">
+                  <div
+                    className="playlist-tile"
+                    onClick={() => {
+                      dispatch(
+                        playerActions.setTrack({
+                          albumImg: track.album.images[0].url,
+                          albumName: track.name,
+                          artists: track.artists,
+                          trackId: track.uri,
+                          duration: track.duration_ms,
+                        })
+                      );
+                    }}
+                  >
                     <img src={track.album.images[0].url} alt="" />
                     <h3>{track.name}</h3>
                   </div>
@@ -72,6 +87,7 @@ const PlaylistPage: React.FC = () => {
             })}
         </div>
       </div>
+      <MusicPlayer accessToken={access_token} />
     </>
   );
 };

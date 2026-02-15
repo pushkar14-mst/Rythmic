@@ -41,7 +41,7 @@ const HomePage: React.FC = () => {
         params: {
           q: 'genre:"' + genre + '"',
           type: "track",
-          limit: 8, // Number of tracks to retrieve
+          limit: 20, // Number of tracks to retrieve
         },
       })
       .then((res) => {
@@ -62,7 +62,7 @@ const HomePage: React.FC = () => {
           Authorization: "Bearer " + access_token,
         },
         params: {
-          limit: 8,
+          limit: 20,
         },
       })
       .then((res) => {
